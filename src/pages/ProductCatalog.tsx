@@ -39,6 +39,94 @@ const ProductCatalog = () => {
     loadProducts();
   }, [filters, searchTerm]);
 
+  // Fallback mock data
+  const mockProducts = [
+    {
+      id: 1,
+      name: 'Executive Diary Set',
+      category: 'corporate',
+      series: 'TakshaVerse',
+      price: 1299,
+      originalPrice: 1599,
+      image: 'https://images.unsplash.com/photo-1465379944081-7f47de8d74ac?auto=format&fit=crop&w=400&q=80',
+      rating: 4.8,
+      reviews: 24,
+      isNew: true,
+      description: 'Premium executive diary with elegant design and quality materials.',
+      stock: 10,
+    },
+    {
+      id: 2,
+      name: 'Wooden Pen Drive Casing',
+      category: 'corporate',
+      series: 'TakshaVerse',
+      price: 899,
+      originalPrice: null,
+      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80',
+      rating: 4.7,
+      reviews: 18,
+      isNew: false,
+      description: 'Elegant wooden casing for pen drives, perfect for corporate gifts.',
+      stock: 15,
+    },
+    {
+      id: 3,
+      name: 'Customized Photo Frame',
+      category: 'custom',
+      series: 'Moments+',
+      price: 599,
+      originalPrice: null,
+      image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&q=80',
+      rating: 4.9,
+      reviews: 32,
+      isNew: true,
+      description: 'Personalized photo frames for your precious memories.',
+      stock: 25,
+    },
+    {
+      id: 4,
+      name: 'Decorative Wall Art',
+      category: 'home',
+      series: 'Garden+',
+      price: 1899,
+      originalPrice: 2299,
+      image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80',
+      rating: 4.6,
+      reviews: 15,
+      isNew: false,
+      description: 'Beautiful wall art to transform your living space.',
+      stock: 8,
+    },
+    {
+      id: 5,
+      name: 'Personalized Jewelry Box',
+      category: 'personal',
+      series: 'TakshaVerse',
+      price: 799,
+      originalPrice: null,
+      image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=400&q=80',
+      rating: 4.8,
+      reviews: 28,
+      isNew: true,
+      description: 'Elegant jewelry box with personalized engraving.',
+      stock: 12,
+    },
+    {
+      id: 6,
+      name: 'Spiritual Meditation Set',
+      category: 'spiritual',
+      series: 'Spiritual Collection',
+      price: 1499,
+      originalPrice: null,
+      image: 'https://images.unsplash.com/photo-1604909052434-1c5adf2c787d?auto=format&fit=crop&w=400&q=80',
+      rating: 4.9,
+      reviews: 22,
+      isNew: false,
+      description: 'Sacred meditation set for spiritual practice.',
+      stock: 6,
+    },
+  ];
+
   const loadProducts = async () => {
     try {
       setLoading(true);
@@ -59,10 +147,13 @@ const ProductCatalog = () => {
       setProducts(response.products || []);
     } catch (error) {
       console.error('Error loading products:', error);
+      console.log('Using fallback mock data');
+      // Use fallback mock data when API fails
+      setProducts(mockProducts);
       toast({
-        title: "Error",
-        description: "Failed to load products. Please try again.",
-        variant: "destructive"
+        title: "Using Demo Data",
+        description: "Backend not connected. Showing sample products.",
+        variant: "default"
       });
     } finally {
       setLoading(false);

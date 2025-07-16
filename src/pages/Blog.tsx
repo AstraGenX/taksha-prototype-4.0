@@ -19,6 +19,75 @@ const Blog = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Mock blog data for fallback
+  const mockBlogs = [
+    {
+      _id: '1',
+      title: 'The Art of Traditional Craftsmanship',
+      excerpt: 'Discover the rich heritage of traditional Indian crafts and their modern relevance.',
+      content: 'Traditional craftsmanship represents the soul of Indian culture...',
+      category: 'tradition',
+      author: { name: 'Taksha Team', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
+      publishedAt: '2024-01-15T10:30:00Z',
+      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80',
+      tags: ['craftsmanship', 'tradition', 'culture'],
+      featured: true,
+      readTime: '5 min read'
+    },
+    {
+      _id: '2',
+      title: 'Sustainable Gifting: A Modern Approach',
+      excerpt: 'How to choose gifts that are both meaningful and environmentally conscious.',
+      content: 'Sustainable gifting is becoming increasingly important in our modern world...',
+      category: 'lifestyle',
+      author: { name: 'Sustainability Team', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b4e69374?w=150' },
+      publishedAt: '2024-01-10T15:45:00Z',
+      image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=800&q=80',
+      tags: ['sustainability', 'gifting', 'environment'],
+      featured: false,
+      readTime: '4 min read'
+    },
+    {
+      _id: '3',
+      title: 'The Story Behind Every Taksha Product',
+      excerpt: 'Learn about the journey from concept to creation in our product development.',
+      content: 'Every Taksha product tells a story of passion, dedication, and craftsmanship...',
+      category: 'craftsmanship',
+      author: { name: 'Design Team', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' },
+      publishedAt: '2024-01-05T11:20:00Z',
+      image: 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=800&q=80',
+      tags: ['design', 'process', 'taksha'],
+      featured: false,
+      readTime: '6 min read'
+    },
+    {
+      _id: '4',
+      title: 'Cultural Significance of Indian Festivals',
+      excerpt: 'Exploring the deeper meaning behind traditional Indian celebrations.',
+      content: 'Indian festivals are not just celebrations but cultural treasures...',
+      category: 'culture',
+      author: { name: 'Cultural Team', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
+      publishedAt: '2024-01-01T09:00:00Z',
+      image: 'https://images.unsplash.com/photo-1604909052434-1c5adf2c787d?auto=format&fit=crop&w=800&q=80',
+      tags: ['festivals', 'culture', 'tradition'],
+      featured: false,
+      readTime: '7 min read'
+    },
+    {
+      _id: '5',
+      title: 'Finding Inspiration in Everyday Moments',
+      excerpt: 'How to discover creative inspiration in your daily life.',
+      content: 'Inspiration surrounds us in every moment, waiting to be discovered...',
+      category: 'inspiration',
+      author: { name: 'Creative Team', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b4e69374?w=150' },
+      publishedAt: '2023-12-28T14:30:00Z',
+      image: 'https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80',
+      tags: ['inspiration', 'creativity', 'life'],
+      featured: false,
+      readTime: '3 min read'
+    }
+  ];
+
   const categories = [
     { id: 'all', name: 'All Posts', color: 'bg-gray-100 text-gray-800' },
     { id: 'tradition', name: 'Tradition', color: 'bg-saffron-100 text-saffron-800' },
@@ -63,62 +132,36 @@ const Blog = () => {
       }
     } catch (error) {
       console.error('Error loading blogs:', error);
-      // Fallback to static data
-      const staticBlogs = [
-        {
-          _id: '1',
-          title: 'The Art of Traditional Woodcarving',
-          excerpt: 'Discover the ancient techniques that bring our handcrafted pieces to life, passed down through generations of skilled artisans.',
-          content: 'Long form content about traditional woodcarving...',
-          author: { name: 'Rajesh Kumar', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
-          publishedAt: '2024-01-15T10:30:00Z',
-          category: 'craftsmanship',
-          tags: ['woodcarving', 'tradition', 'craftsmanship'],
-          image: 'https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?auto=format&fit=crop&w=800&q=80',
-          readTime: '5 min read'
-        },
-        {
-          _id: '2',
-          title: 'Celebrating Diwali with Handcrafted Décor',
-          excerpt: 'Transform your home this Diwali with our collection of traditional handcrafted decorative pieces that honor the festival of lights.',
-          content: 'Long form content about Diwali decorations...',
-          author: { name: 'Priya Sharma', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b4e69374?w=150' },
-          publishedAt: '2024-01-12T15:45:00Z',
-          category: 'culture',
-          tags: ['diwali', 'decoration', 'festival'],
-          image: 'https://images.unsplash.com/photo-1605538883669-825200433431?auto=format&fit=crop&w=800&q=80',
-          readTime: '4 min read'
-        },
-        {
-          _id: '3',
-          title: 'Sustainable Living with Handmade Products',
-          excerpt: 'Learn how choosing handcrafted items contributes to a more sustainable lifestyle and supports local artisan communities.',
-          content: 'Long form content about sustainable living...',
-          author: { name: 'Amit Patel', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' },
-          publishedAt: '2024-01-10T12:20:00Z',
-          category: 'lifestyle',
-          tags: ['sustainability', 'eco-friendly', 'handmade'],
-          image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
-          readTime: '6 min read'
-        },
-        {
-          _id: '4',
-          title: 'The Stories Behind Our Artisan Partners',
-          excerpt: 'Meet the talented craftspeople who pour their hearts into creating each unique piece in our collection.',
-          content: 'Long form content about artisan partners...',
-          author: { name: 'Sneha Gupta', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' },
-          publishedAt: '2024-01-08T09:15:00Z',
-          category: 'inspiration',
-          tags: ['artisans', 'stories', 'community'],
-          image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=800&q=80',
-          readTime: '7 min read'
-        }
-      ];
+      console.log('Using fallback mock blog data');
       
-      if (staticBlogs.length > 0) {
-        setFeaturedBlog(staticBlogs[0]);
-        setBlogs(staticBlogs.slice(1));
+      // Filter mock blogs based on search and category
+      let filteredBlogs = mockBlogs;
+      
+      if (selectedCategory !== 'all') {
+        filteredBlogs = filteredBlogs.filter(blog => blog.category === selectedCategory);
       }
+      
+      if (searchTerm) {
+        filteredBlogs = filteredBlogs.filter(blog => 
+          blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+      
+      // Set featured blog and remaining blogs
+      if (filteredBlogs.length > 0) {
+        setFeaturedBlog(filteredBlogs[0]);
+        setBlogs(filteredBlogs.slice(1));
+      } else {
+        setFeaturedBlog(null);
+        setBlogs([]);
+      }
+      
+      toast({
+        title: "Using Demo Data",
+        description: "Backend not connected. Showing sample blog posts.",
+        variant: "default"
+      });
     } finally {
       setLoading(false);
     }
@@ -141,22 +184,16 @@ const Blog = () => {
     return cat ? cat.color : 'bg-gray-100 text-gray-800';
   };
 
-  const filteredBlogs = blogs.filter(blog => {
-    const matchesCategory = selectedCategory === 'all' || blog.category === selectedCategory;
-    const matchesSearch = !searchTerm || 
-      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
         <Navigation />
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-saffron-600" />
-            <p className="text-lg text-muted-foreground">Loading blog posts...</p>
+        <div className="pt-20 pb-16">
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center">
+              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-orange-600" />
+              <p className="text-gray-600">Loading blog posts...</p>
+            </div>
           </div>
         </div>
         <Footer />
@@ -165,185 +202,136 @@ const Blog = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Navigation />
-      
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-serif font-bold text-walnut-800 mb-4">
-            Our Blog
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover stories, insights, and inspiration from the world of traditional craftsmanship
-          </p>
-        </div>
-
-        {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <Input
-              placeholder="Search blog posts..."
-              className="pl-10"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+      <div className="pt-20 pb-16">
+        <div className="container mx-auto px-4 py-8">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Our <span className="text-orange-600">Blog</span>
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover stories, insights, and inspiration from the world of traditional crafts and modern design.
+            </p>
           </div>
-          
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCategory(category.id)}
-                className={selectedCategory === category.id ? 'bg-saffron-600 hover:bg-saffron-700' : ''}
-              >
-                {category.name}
-              </Button>
-            ))}
-          </div>
-        </div>
 
-        {/* Featured Blog */}
-        {featuredBlog && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif font-bold text-walnut-800 mb-6 text-center">
-              Featured Post
-            </h2>
-            <Card 
-              className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300"
-              onClick={() => handleBlogClick(featuredBlog)}
-            >
-              <div className="md:flex">
-                <div className="md:w-1/2">
+          {/* Search and Categories */}
+          <div className="mb-8 space-y-4">
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search blog posts..."
+                className="pl-10"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((category) => (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.id)}
+                  className="rounded-full"
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Featured Blog */}
+          {featuredBlog && (
+            <Card className="mb-12 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => handleBlogClick(featuredBlog)}>
+              <div className="grid grid-cols-1 lg:grid-cols-2">
+                <div className="relative h-64 lg:h-auto">
                   <img
                     src={featuredBlog.image}
                     alt={featuredBlog.title}
-                    className="w-full h-64 md:h-full object-cover"
+                    className="w-full h-full object-cover"
                   />
+                  <div className="absolute top-4 left-4">
+                    <Badge className={`${getCategoryColor(featuredBlog.category)} border-none`}>
+                      Featured
+                    </Badge>
+                  </div>
                 </div>
-                <div className="md:w-1/2 p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Badge className={getCategoryColor(featuredBlog.category)}>
+                <CardContent className="p-8 flex flex-col justify-center">
+                  <div className="flex items-center space-x-4 mb-4">
+                    <Badge variant="outline" className={getCategoryColor(featuredBlog.category)}>
                       {featuredBlog.category}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">{featuredBlog.readTime}</span>
+                    <span className="text-sm text-gray-500">
+                      {formatDate(featuredBlog.publishedAt)}
+                    </span>
                   </div>
-                  
-                  <h3 className="text-2xl font-serif font-bold text-walnut-800 mb-4 hover:text-saffron-600 transition-colors">
-                    {featuredBlog.title}
-                  </h3>
-                  
-                  <p className="text-muted-foreground mb-4 line-clamp-3">
-                    {featuredBlog.excerpt}
-                  </p>
-                  
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">{featuredBlog.title}</h2>
+                  <p className="text-gray-600 mb-6 line-clamp-3">{featuredBlog.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <img
-                        src={featuredBlog.author.avatar}
-                        alt={featuredBlog.author.name}
-                        className="w-8 h-8 rounded-full"
-                      />
-                      <div>
-                        <p className="text-sm font-medium">{featuredBlog.author.name}</p>
-                        <p className="text-xs text-muted-foreground">{formatDate(featuredBlog.publishedAt)}</p>
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                        <User className="h-4 w-4 text-orange-600" />
                       </div>
+                      <span className="text-sm text-gray-700">{featuredBlog.author.name}</span>
                     </div>
-                    
-                    <Button variant="ghost" size="sm" className="text-saffron-600 hover:text-saffron-700">
-                      Read More
-                      <ArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
+                    <span className="text-sm text-gray-500">{featuredBlog.readTime}</span>
                   </div>
-                </div>
+                </CardContent>
               </div>
             </Card>
-          </div>
-        )}
+          )}
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBlogs.map((blog) => (
-            <Card 
-              key={blog._id}
-              className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300 group"
-              onClick={() => handleBlogClick(blog)}
-            >
-              <div className="relative">
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3">
-                  <Badge className={getCategoryColor(blog.category)}>
-                    {blog.category}
-                  </Badge>
-                </div>
-              </div>
-              
-              <CardContent className="p-6">
-                <h3 className="text-xl font-serif font-bold text-walnut-800 mb-3 group-hover:text-saffron-600 transition-colors line-clamp-2">
-                  {blog.title}
-                </h3>
-                
-                <p className="text-muted-foreground mb-4 line-clamp-3">
-                  {blog.excerpt}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <img
-                      src={blog.author.avatar}
-                      alt={blog.author.name}
-                      className="w-6 h-6 rounded-full"
-                    />
-                    <div>
-                      <p className="text-sm font-medium">{blog.author.name}</p>
-                      <p className="text-xs text-muted-foreground">{formatDate(blog.publishedAt)}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>{blog.readTime}</span>
-                  </div>
-                </div>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1 mt-4">
-                  {blog.tags?.slice(0, 3).map((tag, index) => (
-                    <Badge key={index} variant="secondary" className="text-xs">
-                      <Tag className="h-3 w-3 mr-1" />
-                      {tag}
+          {/* Blog Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map((blog) => (
+              <Card key={blog._id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => handleBlogClick(blog)}>
+                <div className="relative h-48">
+                  <img
+                    src={blog.image}
+                    alt={blog.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <Badge className={getCategoryColor(blog.category)}>
+                      {blog.category}
                     </Badge>
-                  ))}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* No Results */}
-        {filteredBlogs.length === 0 && !loading && (
-          <div className="text-center py-12">
-            <p className="text-lg text-muted-foreground">No blog posts found matching your criteria.</p>
-            <Button 
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('all');
-              }}
-              className="mt-4"
-              variant="outline"
-            >
-              Clear Filters
-            </Button>
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-2 mb-3">
+                    <Calendar className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm text-gray-500">
+                      {formatDate(blog.publishedAt)}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">{blog.title}</h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3">{blog.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center">
+                        <User className="h-3 w-3 text-orange-600" />
+                      </div>
+                      <span className="text-sm text-gray-700">{blog.author.name}</span>
+                    </div>
+                    <span className="text-sm text-gray-500">{blog.readTime}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        )}
+
+          {/* No Results */}
+          {blogs.length === 0 && !featuredBlog && !loading && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No blog posts found matching your search criteria.</p>
+            </div>
+          )}
+        </div>
       </div>
-      
       <Footer />
     </div>
   );

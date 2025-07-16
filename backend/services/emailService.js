@@ -2,14 +2,22 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 
-// Create transporter
-const transporter = nodemailer.createTransporter({
+// Create transporter with fallback for disabled email
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   }
 });
+
+// Check if email is disabled
+const isEmailDisabled = () => {
+  return process.env.EMAIL_USER === 'disabled@example.com' || 
+         process.env.EMAIL_PASS === 'disabled' || 
+         !process.env.EMAIL_USER || 
+         !process.env.EMAIL_PASS;
+};
 
 // Email templates
 const getEmailTemplate = (templateName) => {
@@ -162,6 +170,11 @@ const getFallbackTemplate = (templateName) => {
 // Send welcome email
 const sendWelcomeEmail = async (email, name) => {
   try {
+    if (isEmailDisabled()) {
+      console.log(`Email disabled - Welcome email would be sent to ${email}`);
+      return;
+    }
+    
     const template = getEmailTemplate('welcome');
     const html = template
       .replace(/{{name}}/g, name)
@@ -184,6 +197,11 @@ const sendWelcomeEmail = async (email, name) => {
 // Send order confirmation email
 const sendOrderConfirmationEmail = async (order) => {
   try {
+    if (isEmailDisabled()) {
+      console.log(`Email disabled - Order confirmation email would be sent for order ${order.orderNumber}`);
+      return;
+    }
+    
     const user = await require('../models/User').findById(order.user);
     if (!user) return;
     
@@ -237,6 +255,11 @@ const sendOrderConfirmationEmail = async (order) => {
 // Send order shipped email
 const sendOrderShippedEmail = async (order) => {
   try {
+    if (isEmailDisabled()) {
+      console.log(`Email disabled - Order shipped email would be sent for order ${order.orderNumber}`);
+      return;
+    }
+    
     const user = await require('../models/User').findById(order.user);
     if (!user) return;
     
@@ -268,6 +291,11 @@ const sendOrderShippedEmail = async (order) => {
 // Send password reset email
 const sendPasswordResetEmail = async (email, name, resetToken) => {
   try {
+    if (isEmailDisabled()) {
+      console.log(`Email disabled - Password reset email would be sent to ${email}`);
+      return;
+    }
+    
     const template = getEmailTemplate('passwordReset');
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
     
